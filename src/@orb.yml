@@ -1,15 +1,13 @@
 version: 2.1
 
 description: >
-  Sample orb description
-# What will your orb allow users to accomplish?
-# Descriptions should be short, simple, and informative.
+  A orb that lets users spin up runners on the demand durning a pipeline. Users are able to provision an EC2 instance on the fly, install the runner agent, and allow the runner to accept units of work. 
 
 # This information will be displayed in the orb registry and is not mandatory.
 display:
-  home_url: "https://www.website.com/docs"
-  source_url: "https://www.github.com/EXAMPLE_ORG/EXAMPLE_PROJECT"
+  home_url: "https://circleci.com/gh/james-crowley/on-demand-runners"
+  source_url: "https://circleci.com/gh/james-crowley/on-demand-runners"
 
 # If your orb requires other orbs, you can import them like this. Otherwise remove the "orbs" stanza.
-# orbs:
-#  hello: circleci/hello-build@0.0.5
+orbs:
+ hello: circleci/aws-cli@2
