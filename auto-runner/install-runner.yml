@@ -1,0 +1,31 @@
+---
+- name: Install and Configure On Demand Runners
+  hosts: "{{ target_hosts }}"
+  become: true
+
+  vars_files:
+    - vars/config.yml
+
+  pre_tasks:
+    - name: Initialize Config Variables
+      include_vars: vars/config.yml
+
+    - name: Set Resource Class Name
+      set_fact:
+        RESOURCE_CLASS: "{{ lookup('env', 'CIRCLE_PROJECT_REPONAME') }}-{{ lookup('env', 'CIRCLE_SHA1') }}"
+      when: (RESOURCE_CLASS_CREATION | bool == true or RUNNER_TOKEN_CREATION | bool == true) and (RESOURCE_CLASS == '' or RESOURCE_CLASS is not defined)
+
+    - name: Create new Resource Class for On Demand Runner
+      include_tasks: tasks/create-resource-class.yml
+      when: (RESOURCE_CLASS_CREATION | bool == true or RUNNER_TOKEN_CREATION | bool == true)
+      run_once: true
+
+    - name: Create Runner Auth Token for On Demand Runner
+      include_tasks:  tasks/generate-token.yml
+      when: (RESOURCE_CLASS_CREATION | bool == true or RUNNER_TOKEN_CREATION | bool == true)
+      run_once: true
+
+  tasks:
+    - name: Install and Configure Launch Agent
+      import_role:
+        name: runner
