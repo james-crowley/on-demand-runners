@@ -6,7 +6,7 @@
     status_code: 200
     return_content: yes
     headers:
-      circle-token: "{{ API_TOKEN }}"
+      circle-token: "{{ CIRCLE_TOKEN }}"
   register: result
 
 - name: Setting up query for JSON
@@ -23,5 +23,5 @@
     method: DELETE
     status_code: 204
     headers:
-      circle-token: "{{ API_TOKEN }}"
+      circle-token: "{{ CIRCLE_TOKEN }}"
   with_items: "{{ resource_class_ids }}"

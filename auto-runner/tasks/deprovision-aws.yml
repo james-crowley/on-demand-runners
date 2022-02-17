@@ -20,3 +20,4 @@
   file:
     path: "aws_ec2.yml"
     state: absent
+  when: (TEMPLATE_DYNAMIC_INVENTORY | bool == true )

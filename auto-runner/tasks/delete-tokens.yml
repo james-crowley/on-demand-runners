@@ -6,7 +6,7 @@
     status_code: 200
     return_content: yes
     headers:
-      circle-token: "{{ API_TOKEN }}"
+      circle-token: "{{ CIRCLE_TOKEN }}"
   register: result
 
 - name: Pull out List Tokens for {{ NAMESPACE }}/{{ RESOURCE_CLASS }}
@@ -19,5 +19,5 @@
     method: DELETE
     status_code: 204
     headers:
-      circle-token: "{{ API_TOKEN }}"
+      circle-token: "{{ CIRCLE_TOKEN }}"
   with_items: "{{ token_list }}"

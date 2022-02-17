@@ -7,5 +7,5 @@
     body: {"resource_class": "{{ NAMESPACE }}/{{ RESOURCE_CLASS }}", "description": "On demand Runner!"}
     status_code: 201
     headers:
-      circle-token: "{{ API_TOKEN }}"
+      circle-token: "{{ CIRCLE_TOKEN }}"
   delegate_to: 127.0.0.1

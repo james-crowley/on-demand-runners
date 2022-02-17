@@ -7,7 +7,3 @@ description: >
 display:
   home_url: "https://circleci.com/gh/james-crowley/on-demand-runners"
   source_url: "https://circleci.com/gh/james-crowley/on-demand-runners"
-
-# If your orb requires other orbs, you can import them like this. Otherwise remove the "orbs" stanza.
-orbs:
- hello: circleci/aws-cli@2
