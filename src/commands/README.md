@@ -1,27 +1,9 @@
 # Commands
 
-Easily add and author [Reusable Commands](https://circleci.com/docs/2.0/reusing-config/#authoring-reusable-commands) to the `src/commands` directory.
+For more details on the commands please look on the Orb Registry and Yaml Files
 
-Each _YAML_ file within this directory will be treated as an orb command, with a name which matches its filename.
-
-View the included _[greet.yml](./greet.yml)_ example.
-
-```yaml
-description: >
-  Replace this text with a description for this command.
-  # What will this command do?
-  # Descriptions should be short, simple, and clear.
-parameters:
-  greeting:
-    type: string
-    default: "Hello"
-    description: "Select a proper greeting"
-steps:
-  - run:
-      name: Hello World
-      command: echo << parameters.greeting >> world
-```
-
-## See:
- - [Orb Author Intro](https://circleci.com/docs/2.0/orb-author-intro/#section=configuration)
- - [How to author commands](https://circleci.com/docs/2.0/reusing-config/#authoring-reusable-commands)
+- [provision](provision.yml) - Provisions On Demand Runners by talking with AWS EC2
+- [deprovision](deprovision.yml) - Deprovisions On Remand Runners by talking with AWS EC2
+- [install-ansible](install-ansible.yml) - Install Ansible via Pip. Ansible is needed for On Demand Runners
+- [install-dependencies](install-dependencies.yml) - Installs need Python Packages via Pip and Installs Ansible Modules from Ansible Galaxy
+- [install-runner](install-runner.yml) - Installs and Configures the Runner agent on the On Demand Runners 

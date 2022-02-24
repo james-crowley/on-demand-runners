@@ -9,11 +9,6 @@
     - name: Initialize Config Variables
       include_vars: vars/config.yml
 
-    - name: Set Resource Class Name
-      set_fact:
-        RESOURCE_CLASS: "{{ lookup('env', 'CIRCLE_PROJECT_REPONAME') }}-{{ lookup('env', 'CIRCLE_SHA1') }}"
-      when: (RESOURCE_CLASS == '' or RESOURCE_CLASS is not defined)
-
   tasks:
     - name: Deploy On Demand Runners for given cloud provider
       include_tasks: tasks/provision.yml

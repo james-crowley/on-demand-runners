@@ -66,6 +66,13 @@ parameters:
       A CircleCI generated namespace for your organization. Please see
       https://circleci.com/docs/2.0/orb-concepts/#namespaces for more details.
     type: env_var_name
+  resource_class:
+    default: RESOURCE_CLASS
+    description: |
+      Name of the resource class that will be generated and used for On Demand Runners. 
+      If not resource class is given a default will be selected using 'pipeline.id'. PLEASE note you
+      need to set resource class to a name that is not currently being used, as the resource class will be deleted.
+    type: env_var_name
   number_of_numbers:
     default: NUMBER_OF_RUNNERS
     description: |
@@ -110,4 +117,4 @@ steps:
   - run: Provision On Demand Runners
     working_directory: ~/project/on-demand-runners/auto-runner/
     command: |
-        ansible-playbook provision-on-demand-runners.yml -e "REGION=$AWS_DEFAULT_REGION AMI_ID=$AWS_AMI_ID SECURITY_GROUP=$AWS_SECURITY_GROUP_ID VPC_ID=$AWS_VPC_ID SSH_KEY_NAME=$AWS_SSH_KEY INSTANCE_TYPE=$AWS_INSTANCE_TYPE NAMESPACE=$CIRCLECI_NAMESPACE NUMBER_OF_RUNNERS=$NUMBER_OF_RUNNERS UNTIL_RETRIES_RUNNERS=$NUMBER_OF_WAITS TEMPLATE_DYNAMIC_INVENTORY=true CLOUD_PROVIDER=aws"
+        ansible-playbook provision-on-demand-runners.yml -e "REGION=$AWS_DEFAULT_REGION AMI_ID=$AWS_AMI_ID SECURITY_GROUP=$AWS_SECURITY_GROUP_ID VPC_ID=$AWS_VPC_ID SSH_KEY_NAME=$AWS_SSH_KEY INSTANCE_TYPE=$AWS_INSTANCE_TYPE NAMESPACE=$CIRCLECI_NAMESPACE RESOURCE_CLASS=$RESOURCE_CLASS NUMBER_OF_RUNNERS=$NUMBER_OF_RUNNERS UNTIL_RETRIES_RUNNERS=$NUMBER_OF_WAITS TEMPLATE_DYNAMIC_INVENTORY=true CLOUD_PROVIDER=aws"

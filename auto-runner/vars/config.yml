@@ -5,6 +5,7 @@
 
 # # CircleCI Namespace and valid CIRCLE Token for working with the API
 # NAMESPACE: 
+# RESOURCE_CLASS:
 # CIRCLE_TOKEN:
 
 # # The AWS host you want to target. Usually going to be the Public IP Address
