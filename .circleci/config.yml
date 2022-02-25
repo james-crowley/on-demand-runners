@@ -22,12 +22,12 @@ parameters:
     type: string
     default: "dev:alpha"
 
-jobs:
-  run-test-on-runner:
-    machine: true
-    resource_class: crowley-namespace/on-demand-runners-01
-    steps:
-      - run: echo "Hello World! I am running on a On Demand Runner!"
+# jobs:
+#   run-test-on-runner:
+#     machine: true
+#     resource_class: crowley-namespace/<< pipeline.id >>
+#     steps:
+#       - run: echo "Hello World! I am running on a On Demand Runner!"
 
 workflows:
   # Prior to producing a development orb (which requires credentials) basic validation, linting, and even unit testing can be performed.
