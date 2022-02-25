@@ -66,14 +66,14 @@ workflows:
       - on-demand-runners/deploy:
           context: aws-creds
           resource_class: << pipeline.id >>
-      - run-test-on-runner:
-          requires:
-            - on-demand-runners/deploy
+      # - run-test-on-runner:
+      #     requires:
+      #       - on-demand-runners/deploy
       - on-demand-runners/destroy:
           context: aws-creds
           resource_class: << pipeline.id >>
-          requires:
-            - "run-test-on-runner"
+          # requires:
+          #   - "run-test-on-runner"
 
       # Publish a semver version of the orb. relies on
       # the commit subject containing the text "[semver:patch|minor|major|skip]"

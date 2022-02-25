@@ -20,7 +20,7 @@
     filters:
       "tag:Name": "{{ NAMESPACE }}-{{ RESOURCE_CLASS }}-{{ item }}"
   register: ec2_node_info
-  until: ec2_node_info.instances[0].state.name == "running"
+  until: ec2_node_info.instances[0].state.name == "started"
   retries: "{{ UNTIL_RETRIES_RUNNERS }}"
   delay: 10
   loop: "{{ range(0, NUMBER_OF_RUNNERS | int) | list }}"
