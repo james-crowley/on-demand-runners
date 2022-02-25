@@ -1,8 +1,0 @@
-description: The official CircleCI CIMG Python Docker image.
-docker:
-  - image: 'cimg/python:<< parameters.tag >>'
-parameters:
-  tag:
-    default: '3.10'
-    description: The `cimg/python` Docker image version tag.
-    type: string
