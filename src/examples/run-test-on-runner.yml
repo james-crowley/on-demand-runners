@@ -10,8 +10,8 @@ usage:
     run-test-on-runner:
       machine: true
       resource_class: crowley-namespace/<< pipeline.id >>
-    steps:
-      - run: echo "Hello World! I am running on a On Demand Runner!"
+      steps:
+        - run: echo "Hello World! I am running on a On Demand Runner!"
 
   workflows:
     example-workflow:
@@ -19,7 +19,7 @@ usage:
         - on-demand-runners/deploy:
             resource_class: << pipeline.id >> 
         - run-test-on-runner:
-          requires:
-            - on-demand-runners/deploy
+            requires:
+              - on-demand-runners/deploy
         - on-demand-runners/destroy:
             resource_class: << pipeline.id >> 

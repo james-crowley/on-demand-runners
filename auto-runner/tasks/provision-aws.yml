@@ -13,7 +13,7 @@
     wait: false
     state: running
     user_data: "{{ lookup('file', 'user-data.yml') }}"
-  loop: "{{ range(0, NUMBER_OF_RUNNERS) | list }}"
+  loop: "{{ range(0, NUMBER_OF_RUNNERS | int) | list }}"
 
 - name: Gather information about any instance with Name beginning with {{ NAMESPACE }}-{{ RESOURCE_CLASS }}-*
   ec2_instance_info:
@@ -23,7 +23,7 @@
   until: ec2_node_info.instances[0].state.name == "running"
   retries: "{{ UNTIL_RETRIES_RUNNERS }}"
   delay: 10
-  loop: "{{ range(0, NUMBER_OF_RUNNERS) | list }}"
+  loop: "{{ range(0, NUMBER_OF_RUNNERS | int) | list }}"
 
 - name: Template EC2 Dynamic Inventory to only target On Demand Runners
   template:

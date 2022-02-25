@@ -1,7 +1,8 @@
 description: >
   Deprovision and Remove On Demand Runners
 
-executor: python-docker
+docker:
+  - image: 'cimg/python:<< parameters.tag >>'
 
 parameters:
   aws-region:
@@ -79,6 +80,10 @@ parameters:
     default: 2.9.*
     description: Ansible Version To Be Installed
     type: string
+  tag:
+    default: '3.10'
+    description: The `cimg/python` Docker image version tag.
+    type: string
 steps:
   - run:
       name: Installing Ansible <<parameters.version>>
@@ -127,11 +132,13 @@ steps:
           echo "export ANSIBLE_GIT_BRANCH=$(echo ${ANSIBLE_GIT_BRANCH:-main})" >> $BASH_ENV
           source $BASH_ENV
 
-  - run: Clone On Demand Runner Ansible from Github
-    command: |
-        git clone ${ANSIBLE_GIT_URL} && cd ./on-demand-runners && git checkout ${ANSIBLE_GIT_BRANCH}
+  - run: 
+      name: Clone On Demand Runner Ansible from Github
+      command: |
+          git clone ${ANSIBLE_GIT_URL} && cd ./on-demand-runners && git checkout ${ANSIBLE_GIT_BRANCH}
   
-  - run: Deprovision On Demand Runners
-    working_directory: ~/project/on-demand-runners/auto-runner/
-    command: |
-        ansible-playbook deprovision-on-demand-runners.yml -e "REGION=$AWS_DEFAULT_REGION SSH_KEY_NAME=$AWS_SSH_KEY NAMESPACE=$CIRCLECI_NAMESPACE RESOURCE_CLASS=$RESOURCE_CLASS CIRCLE_TOKEN=$CIRCLE_TOKEN NUMBER_OF_RUNNERS=$NUMBER_OF_RUNNERS UNTIL_RETRIES_RUNNERS=$NUMBER_OF_WAITS RESOURCE_CLASS_CREATION=true RUNNER_TOKEN_CREATION=true TEMPLATE_DYNAMIC_INVENTORY=true CLOUD_PROVIDER=aws"
+  - run: 
+      name: Deprovision On Demand Runners
+      working_directory: ~/project/on-demand-runners/auto-runner/
+      command: |
+          ansible-playbook deprovision-on-demand-runners.yml -e "REGION=$AWS_DEFAULT_REGION SSH_KEY_NAME=$AWS_SSH_KEY NAMESPACE=$CIRCLECI_NAMESPACE RESOURCE_CLASS=$RESOURCE_CLASS CIRCLE_TOKEN=$CIRCLE_TOKEN NUMBER_OF_RUNNERS=$NUMBER_OF_RUNNERS UNTIL_RETRIES_RUNNERS=$NUMBER_OF_WAITS RESOURCE_CLASS_CREATION=true RUNNER_TOKEN_CREATION=true TEMPLATE_DYNAMIC_INVENTORY=true CLOUD_PROVIDER=aws"
