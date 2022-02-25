@@ -8,7 +8,7 @@ parameters:
   aws-region:
     default: AWS_DEFAULT_REGION
     description: |
-      Env var of AWS region to operate in. If no region is provided US-EAST-1 
+      Env var of AWS region to operate in. If no region is provided US-EAST-1
       will be selected.
     type: env_var_name
   aws-secret-access-key:
@@ -30,7 +30,7 @@ parameters:
     description: |
       The name of the SSH key you want the EC2 instance(s) to have
       injected. Please note you need to already have uploaded the key
-      to AWS to reference the SSH key name. Set this to the name of 
+      to AWS to reference the SSH key name. Set this to the name of
       the environment variable you will use to hold this value, i.e. AWS_SSH_KEY.
     type: env_var_name
   circle-token:
@@ -49,13 +49,13 @@ parameters:
     description: |
       Name of the resource class that will be generated and used for On Demand Runners.
       If you do not have a resource class to use, please pass in 'pipeline.id'. Generally, it best
-      practice to pass in 'pipeline.id'. PLEASE note you need to set resource class to a 
+      practice to pass in 'pipeline.id'. PLEASE note you need to set resource class to a
       name that is not currently being used, as the resource class will be deleted.
     type: string
   number_of_numbers:
     default: NUMBER_OF_RUNNERS
     description: |
-      Number of on demand runners to deploy. If no number is provided only 1 
+      Number of on demand runners to deploy. If no number is provided only 1
       on demand runner will be deployed. PLEASE be careful setting this number.
     type: env_var_name
   number_of_waits:
