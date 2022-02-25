@@ -30,7 +30,7 @@
 
 - name: Remove Launch Agent Binary if checksum mismatch
   file:
-    path:  "{{ runner_temp_dir.path  }}/circleci-launch-agent"
+    path: "{{ runner_temp_dir.path  }}/circleci-launch-agent"
     state: absent
   when: launch_agent_stat.stat.checksum != checksum
 
@@ -79,12 +79,12 @@
   block:
     - name: Install policycoreutils-devel and rpm-build
       yum:
-          name: "{{ packages }}"
+        name: "{{ packages }}"
       vars:
         packages:
           - policycoreutils-devel
           - rpm-build
-    
+
     - name: Create policy directory
       file:
         path: "{{ LAUNCH_AGENT_DIR }}/policy"
@@ -94,13 +94,13 @@
 
     - name: Generate CircleCI Policy
       command: sepolicy generate --path {{ LAUNCH_AGENT_DIR }}/policy --init {{ LAUNCH_AGENT_DIR }}/circleci-launch-agent
-    
+
     - name: Download circleci_launch_agent.te
       get_url:
         url: "https://raw.githubusercontent.com/CircleCI-Public/runner-installation-files/main/rhel8-install/circleci_launch_agent.te"
         dest: "{{ LAUNCH_AGENT_DIR }}/policy/circleci_launch_agent.te"
         force: yes
-    
+
     - name: Run circleci_launch_agent.sh
       command: "{{ LAUNCH_AGENT_DIR }}/policy/circleci_launch_agent.sh"
   when: ansible_distribution == "RedHat" and ansible_distribution_major_version == "8"
@@ -113,7 +113,7 @@
     group: root
     mode: 0755
 
-- name: Create a symlink between CircleCI Policies 
+- name: Create a symlink between CircleCI Policies
   file:
     src: "{{ LAUNCH_AGENT_DIR }}/circleci.service"
     dest: "/etc/systemd/system/circleci.service"

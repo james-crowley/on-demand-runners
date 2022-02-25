@@ -2,8 +2,7 @@ description: >
   Provision and Configure On Demand Runners
 
 docker:
-  - image: 'cimg/python:<< parameters.tag >>'
-
+  - image: "cimg/python:<< parameters.tag >>"
 
 parameters:
   aws-region:
@@ -113,7 +112,7 @@ parameters:
     description: Ansible Version To Be Installed
     type: string
   tag:
-    default: '3.10'
+    default: "3.10"
     description: The `cimg/python` Docker image version tag.
     type: string
 steps:
@@ -155,30 +154,29 @@ steps:
   - run:
       name: Setting Defaults if Variables are not Set
       command: |
-          echo "export AWS_DEFAULT_REGION=$(echo ${AWS_DEFAULT_REGION:-us-east-1})" >> $BASH_ENV
-          echo "export AWS_INSTANCE_TYPE=$(echo ${AWS_INSTANCE_TYPE:-t2.mirco})" >> $BASH_ENV
-          echo "export RESOURCE_CLASS=$(echo ${RESOURCE_CLASS:-<< parameters.resource_class	>>})" >> $BASH_ENV
-          echo "export NUMBER_OF_RUNNERS=$(echo ${NUMBER_OF_RUNNERS:-1})" >> $BASH_ENV
-          echo "export NUMBER_OF_WAITS=$(echo ${NUMBER_OF_WAITS:-18})" >> $BASH_ENV
-          echo "export ANSIBLE_FORCE_COLOR=$(echo ${ANSIBLE_FORCE_COLOR:-true})" >> $BASH_ENV
-          echo "export ANSIBLE_GIT_URL=$(echo ${ANSIBLE_GIT_URL:-https://github.com/james-crowley/on-demand-runners.git})" >> $BASH_ENV
-          echo "export ANSIBLE_GIT_BRANCH=$(echo ${ANSIBLE_GIT_BRANCH:-main})" >> $BASH_ENV
-          source $BASH_ENV
+        echo "export AWS_DEFAULT_REGION=$(echo ${AWS_DEFAULT_REGION:-us-east-1})" >> $BASH_ENV
+        echo "export AWS_INSTANCE_TYPE=$(echo ${AWS_INSTANCE_TYPE:-t2.mirco})" >> $BASH_ENV
+        echo "export RESOURCE_CLASS=$(echo ${RESOURCE_CLASS:-<< parameters.resource_class	>>})" >> $BASH_ENV
+        echo "export NUMBER_OF_RUNNERS=$(echo ${NUMBER_OF_RUNNERS:-1})" >> $BASH_ENV
+        echo "export NUMBER_OF_WAITS=$(echo ${NUMBER_OF_WAITS:-18})" >> $BASH_ENV
+        echo "export ANSIBLE_FORCE_COLOR=$(echo ${ANSIBLE_FORCE_COLOR:-true})" >> $BASH_ENV
+        echo "export ANSIBLE_GIT_URL=$(echo ${ANSIBLE_GIT_URL:-https://github.com/james-crowley/on-demand-runners.git})" >> $BASH_ENV
+        echo "export ANSIBLE_GIT_BRANCH=$(echo ${ANSIBLE_GIT_BRANCH:-main})" >> $BASH_ENV
+        source $BASH_ENV
 
-  - run: 
+  - run:
       name: Clone On Demand Runner Ansible from Github
       command: |
-          git clone ${ANSIBLE_GIT_URL} && cd ./on-demand-runners && git checkout ${ANSIBLE_GIT_BRANCH}
-        
-  - run: 
+        git clone ${ANSIBLE_GIT_URL} && cd ./on-demand-runners && git checkout ${ANSIBLE_GIT_BRANCH}
+
+  - run:
       name: Provision On Demand Runners
       working_directory: ~/project/on-demand-runners/auto-runner/
       command: |
-          ansible-playbook provision-on-demand-runners.yml -e "REGION=$AWS_DEFAULT_REGION AMI_ID=$AWS_AMI_ID SECURITY_GROUP=$AWS_SECURITY_GROUP_ID VPC_ID=$AWS_VPC_ID SSH_KEY_NAME=$AWS_SSH_KEY INSTANCE_TYPE=$AWS_INSTANCE_TYPE NAMESPACE=$CIRCLECI_NAMESPACE RESOURCE_CLASS=$RESOURCE_CLASS NUMBER_OF_RUNNERS=$NUMBER_OF_RUNNERS UNTIL_RETRIES_RUNNERS=$NUMBER_OF_WAITS TEMPLATE_DYNAMIC_INVENTORY=true CLOUD_PROVIDER=aws"
-    
-  - run: 
+        ansible-playbook provision-on-demand-runners.yml -e "REGION=$AWS_DEFAULT_REGION AMI_ID=$AWS_AMI_ID SECURITY_GROUP=$AWS_SECURITY_GROUP_ID VPC_ID=$AWS_VPC_ID SSH_KEY_NAME=$AWS_SSH_KEY INSTANCE_TYPE=$AWS_INSTANCE_TYPE NAMESPACE=$CIRCLECI_NAMESPACE RESOURCE_CLASS=$RESOURCE_CLASS NUMBER_OF_RUNNERS=$NUMBER_OF_RUNNERS UNTIL_RETRIES_RUNNERS=$NUMBER_OF_WAITS TEMPLATE_DYNAMIC_INVENTORY=true CLOUD_PROVIDER=aws"
+
+  - run:
       name: Configure On Demand Runners
       working_directory: ~/project/on-demand-runners/auto-runner/
       command: |
-          ansible-playbook -i aws_ec2.yml install-runner.yml -u ansible -e "NAMESPACE=$CIRCLECI_NAMESPACE RESOURCE_CLASS=$RESOURCE_CLASS CIRCLE_TOKEN=$CIRCLE_TOKEN RESOURCE_CLASS_CREATION=true RUNNER_TOKEN_CREATION=true target_hosts=all"
-
+        ansible-playbook -i aws_ec2.yml install-runner.yml -u ansible -e "NAMESPACE=$CIRCLECI_NAMESPACE RESOURCE_CLASS=$RESOURCE_CLASS CIRCLE_TOKEN=$CIRCLE_TOKEN RESOURCE_CLASS_CREATION=true RUNNER_TOKEN_CREATION=true target_hosts=all"

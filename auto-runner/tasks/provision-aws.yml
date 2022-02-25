@@ -5,7 +5,7 @@
     region: "{{ REGION }}"
     key_name: "{{ SSH_KEY_NAME }}"
     vpc_subnet_id: "{{ VPC_ID }}"
-    instance_type:  "{{ INSTANCE_TYPE }}"
+    instance_type: "{{ INSTANCE_TYPE }}"
     security_group: "{{ SECURITY_GROUP }}"
     network:
       assign_public_ip: true
@@ -30,5 +30,3 @@
     src: "aws_ec2.yml.j2"
     dest: "aws_ec2.yml"
   when: (TEMPLATE_DYNAMIC_INVENTORY | bool == true )
-
-

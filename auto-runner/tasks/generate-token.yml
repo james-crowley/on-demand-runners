@@ -4,7 +4,11 @@
     url: https://runner.circleci.com/api/v2/runner/token
     method: POST
     body_format: json
-    body: {"resource_class": "{{ NAMESPACE }}/{{ RESOURCE_CLASS }}", "nickname": "On demand Runner!"}
+    body:
+      {
+        "resource_class": "{{ NAMESPACE }}/{{ RESOURCE_CLASS }}",
+        "nickname": "On demand Runner!",
+      }
     status_code: 201
     return_content: yes
     headers:

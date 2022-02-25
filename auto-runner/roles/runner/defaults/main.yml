@@ -9,4 +9,4 @@ CIRCLECI_USER: "circleci"
 # Launch Agent Config Settings
 CLEANUP_WORKING_DIR: true
 TIMEOUT_STOP_SEC: 18300
-RUNNER_NICKNAME:  "{{ ansible_hostname }}"
+RUNNER_NICKNAME: "{{ ansible_hostname }}"

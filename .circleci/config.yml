@@ -85,7 +85,12 @@ workflows:
           add-pr-comment: false
           fail-if-semver-not-indicated: true
           publish-version-tag: false
-          requires: [on-demand-runners/deploy, run-test-on-runner, on-demand-runners/destroy]
+          requires:
+            [
+              on-demand-runners/deploy,
+              run-test-on-runner,
+              on-demand-runners/destroy,
+            ]
           filters:
             branches:
               only:

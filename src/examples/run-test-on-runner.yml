@@ -17,9 +17,9 @@ usage:
     example-workflow:
       jobs:
         - on-demand-runners/deploy:
-            resource_class: << pipeline.id >> 
+            resource_class: << pipeline.id >>
         - run-test-on-runner:
             requires:
               - on-demand-runners/deploy
         - on-demand-runners/destroy:
-            resource_class: << pipeline.id >> 
+            resource_class: << pipeline.id >>

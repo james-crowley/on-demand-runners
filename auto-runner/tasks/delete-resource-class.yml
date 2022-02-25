@@ -1,5 +1,5 @@
 ---
-- name: Get List of Resource Classes 
+- name: Get List of Resource Classes
   uri:
     url: https://runner.circleci.com/api/v2/runner/resource?namespace={{ NAMESPACE }}
     method: GET
@@ -11,7 +11,7 @@
 
 - name: Setting up query for JSON
   set_fact:
-      QUERY: "items[?resource_class==`{{ NAMESPACE }}/{{ RESOURCE_CLASS }}`].id"
+    QUERY: "items[?resource_class==`{{ NAMESPACE }}/{{ RESOURCE_CLASS }}`].id"
 
 - name: Grab ID of {{ NAMESPACE }}/{{ RESOURCE_CLASS }} Resource Class
   set_fact:

@@ -16,7 +16,7 @@
       run_once: true
 
     - name: Create Runner Auth Token for On Demand Runner
-      include_tasks:  tasks/generate-token.yml
+      include_tasks: tasks/generate-token.yml
       when: (RUNNER_TOKEN_CREATION | bool == true)
       run_once: true
 

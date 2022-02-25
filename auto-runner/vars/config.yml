@@ -4,13 +4,13 @@
 # RUNNER_TOKEN_CREATION: true
 
 # # CircleCI Namespace and valid CIRCLE Token for working with the API
-# NAMESPACE: 
+# NAMESPACE:
 # RESOURCE_CLASS:
 # CIRCLE_TOKEN:
 
 # # The AWS host you want to target. Usually going to be the Public IP Address
 # # Need to use the AWS EC2 dynamic inventory
-# target_hosts: 
+# target_hosts:
 # TEMPLATE_DYNAMIC_INVENTORY: true
 
 # # Cloud provider you want to work with
@@ -19,10 +19,10 @@
 
 # # AWS Settings
 # SSH_KEY_NAME:
-# VPC_ID: 
+# VPC_ID:
 # INSTANCE_TYPE:
-# SECURITY_GROUP: 
-# AMI_ID: 
+# SECURITY_GROUP:
+# AMI_ID:
 # REGION:
 
 # # Number of on demand runners to be spun up

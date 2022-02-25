@@ -18,12 +18,12 @@
 - name: Format Architecture Name - x86_64 to amd64
   set_fact:
     arch: "amd64"
-  when:  ansible_architecture == 'x86_64'
+  when: ansible_architecture == 'x86_64'
 
 - name: Format Architecture Name - aarch64 to arm64
   set_fact:
     arch: "arm64"
-  when:  ansible_architecture == 'aarch64'
+  when: ansible_architecture == 'aarch64'
 
 - name: Format Architecture Name - Other Architectures
   set_fact:
@@ -40,4 +40,4 @@
 
 - name: Configure Runner for MacOS
   include_tasks: darwin-setup.yml
-  when: ansible_system == "Darwin" 
+  when: ansible_system == "Darwin"

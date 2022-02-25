@@ -30,7 +30,7 @@
 
 - name: Remove Launch Agent Binary if checksum mismatch
   file:
-    path:  "{{ runner_temp_dir.path  }}/circleci-launch-agent"
+    path: "{{ runner_temp_dir.path  }}/circleci-launch-agent"
     state: absent
   when: launch_agent_stat.stat.checksum != checksum
 
