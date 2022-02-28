@@ -122,6 +122,7 @@ steps:
         echo "export ANSIBLE_FORCE_COLOR=$(echo ${ANSIBLE_FORCE_COLOR:-true})" >> $BASH_ENV
         echo "export ANSIBLE_GIT_URL=$(echo ${ANSIBLE_GIT_URL:-https://github.com/james-crowley/on-demand-runners.git})" >> $BASH_ENV
         echo "export ANSIBLE_GIT_BRANCH=$(echo ${ANSIBLE_GIT_BRANCH:-main})" >> $BASH_ENV
+        echo "export ANSIBLE_HOST_KEY_CHECKING=$(echo ${ANSIBLE_HOST_KEY_CHECKING:-false})" >> $BASH_ENV
         echo "export RESOURCE_CLASS_CREATION=$(echo ${RESOURCE_CLASS_CREATION:-true})" >> $BASH_ENV
         echo "export RUNNER_TOKEN_CREATION=$(echo ${RUNNER_TOKEN_CREATION:-true})" >> $BASH_ENV
         echo "export TEMPLATE_DYNAMIC_INVENTORY=$(echo ${TEMPLATE_DYNAMIC_INVENTORY:-true})" >> $BASH_ENV

@@ -1,7 +1,7 @@
 version: 2.1
 
 description: >
-  A orb that lets users spin up runners on the demand durning a pipeline. Users are able to provision an EC2 instance on the fly, install the runner agent, and allow the runner to accept units of work.
+  A orb that lets users spin up runners on demand durning a pipeline. Users are able to provision an EC2 instance on the fly, install the runner agent, and allow the runner to accept units of work.
 
 # This information will be displayed in the orb registry and is not mandatory.
 display:
