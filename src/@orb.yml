@@ -5,5 +5,5 @@ description: >
 
 # This information will be displayed in the orb registry and is not mandatory.
 display:
-  home_url: "https://circleci.com/gh/james-crowley/on-demand-runners"
-  source_url: "https://circleci.com/gh/james-crowley/on-demand-runners"
+  home_url: "https://github.com/james-crowley/on-demand-runners"
+  source_url: "https://github.com/james-crowley/on-demand-runners"
