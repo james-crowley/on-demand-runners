@@ -5,8 +5,7 @@
 
 A orb that lets users spin up runners on the demand durning a pipeline. Users are able to provision an EC2 instance on the fly, install the runner agent, and allow the runner to accept units of work. 
 
-[CircleCI Orb Registry Page](https://circleci.com/orbs/registry/orb/crowley-namespace/on-demand-runners) - The official registry page of this orb for all versions, executors, commands, and jobs described.
-
+[CircleCI Orb Registry Page](https://circleci.com/orbs/registry/orb/crowley-namespace/on-demand-runners)
 
 ## Why On Demand Runners?
 
