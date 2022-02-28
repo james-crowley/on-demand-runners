@@ -1,0 +1,14 @@
+---
+- name: Provision On Demand Runners
+  hosts: localhost
+
+  vars_files:
+    - vars/config.yml
+
+  pre_tasks:
+    - name: Initialize Config Variables
+      include_vars: vars/config.yml
+
+  tasks:
+    - name: Deploy On Demand Runners for given cloud provider
+      include_tasks: tasks/provision.yml

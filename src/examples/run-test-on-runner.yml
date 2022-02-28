@@ -1,0 +1,27 @@
+description: >
+  Deploy On Demand Runners, Do Testing on Runners and Destroy On Demand Runners
+usage:
+  version: 2.1
+
+  orbs:
+    on-demand-runners: crowley-namespace/on-demand-runners@0.0.1
+
+  jobs:
+    run-test-on-runner:
+      machine: true
+      resource_class: crowley-namespace/<< pipeline.id >>
+      steps:
+        - run: echo "Hello World! I am running on a On Demand Runner!"
+
+  workflows:
+    example-workflow:
+      jobs:
+        - on-demand-runners/deploy:
+            resource_class: << pipeline.id >>
+        - run-test-on-runner:
+            requires:
+              - on-demand-runners/deploy
+        - on-demand-runners/destroy:
+            resource_class: << pipeline.id >>
+            requires:
+              - "run-test-on-runner"

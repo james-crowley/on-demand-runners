@@ -23,16 +23,11 @@ parameters:
     default: "dev:alpha"
 
 jobs:
-  # Define one or more jobs which will utilize your orb's commands and parameters to validate your changes.
-  integration-test-1:
-    docker:
-      - image: cimg/base:stable
+  run-test-on-runner:
+    machine: true
+    resource_class: crowley-namespace/<< pipeline.id >>
     steps:
-      - checkout
-      # "greet" is a sample command packaged with this orb config.
-      # This sample integration test will run as long as the greet command exists. Once you remove the greet command you should remove this line.
-      # Push new changes first, before adding new tests to your config.
-      - on-demand-runners/greet
+      - run: echo "Hello World! I am running on a On Demand Runner!"
 
 workflows:
   # Prior to producing a development orb (which requires credentials) basic validation, linting, and even unit testing can be performed.
@@ -45,9 +40,6 @@ workflows:
       - shellcheck/check:
           dir: ./src/scripts
           exclude: SC2148
-      # optional: Run BATS tests against your scripts
-      - bats/run:
-          path: ./src/tests
       # Publish development version(s) of the orb.
       - orb-tools/publish-dev:
           orb-name: crowley-namespace/on-demand-runners
@@ -55,7 +47,6 @@ workflows:
           requires:
             - orb-tools/lint
             - orb-tools/pack
-            - bats/run
             - shellcheck/check
       # Trigger an integration workflow to test the
       # dev:${CIRCLE_SHA1:0:7} version of your orb
@@ -72,8 +63,19 @@ workflows:
   integration-test_deploy:
     when: << pipeline.parameters.run-integration-tests >>
     jobs:
-      # Run any integration tests defined within the `jobs` key.
-      - integration-test-1
+      - on-demand-runners/deploy:
+          context: aws-creds
+          resource_class: << pipeline.id >>
+      - run-test-on-runner:
+          requires:
+            - on-demand-runners/deploy
+      - on-demand-runners/destroy:
+          context: aws-creds
+          resource_class: << pipeline.id >>
+          requires:
+            - "run-test-on-runner"
+            - "on-demand-runners/deploy"
+
       # Publish a semver version of the orb. relies on
       # the commit subject containing the text "[semver:patch|minor|major|skip]"
       # as that will determine whether a patch, minor or major
@@ -86,10 +88,8 @@ workflows:
           add-pr-comment: false
           fail-if-semver-not-indicated: true
           publish-version-tag: false
-          requires:
-            - integration-test-1
+          requires: [on-demand-runners/deploy, on-demand-runners/destroy]
           filters:
             branches:
               only:
-                - master
                 - main
