@@ -23,3 +23,5 @@ usage:
               - on-demand-runners/deploy
         - on-demand-runners/destroy:
             resource_class: << pipeline.id >>
+            requires:
+              - "run-test-on-runner"

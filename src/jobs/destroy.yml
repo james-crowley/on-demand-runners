@@ -23,7 +23,7 @@ parameters:
     description: |
       AWS access key id for IAM role. Set this to the name of
       the environment variable you will use to hold this
-      value, i.e. AWS_ACCESS_KEY.
+      value, i.e. AWS_ACCESS_KEY_ID.
     type: env_var_name
   aws-ssh-key:
     default: AWS_SSH_KEY
@@ -95,13 +95,13 @@ steps:
   - run:
       name: Setting Defaults if Variables are not Set
       command: |
-        echo "export AWS_DEFAULT_REGION=$(echo ${AWS_DEFAULT_REGION:-us-east-1})" >> $BASH_ENV
-        echo "export RESOURCE_CLASS=$(echo ${RESOURCE_CLASS:-<< parameters.resource_class	>>})" >> $BASH_ENV
-        echo "export NUMBER_OF_RUNNERS=$(echo ${NUMBER_OF_RUNNERS:-1})" >> $BASH_ENV
-        echo "export NUMBER_OF_WAITS=$(echo ${NUMBER_OF_WAITS:-18})" >> $BASH_ENV
+        echo "export AWS_DEFAULT_REGION=$(echo ${<< parameters.aws-region >>:-us-east-1})" >> $BASH_ENV
+        echo "export RESOURCE_CLASS=$(echo ${-<< parameters.resource_class	>>})" >> $BASH_ENV
+        echo "export NUMBER_OF_RUNNERS=$(echo ${<< parameters.number_of_numbers >>:-1})" >> $BASH_ENV
+        echo "export NUMBER_OF_WAITS=$(echo ${<< parameters.number_of_waits >>:-18})" >> $BASH_ENV
         echo "export ANSIBLE_FORCE_COLOR=$(echo ${ANSIBLE_FORCE_COLOR:-true})" >> $BASH_ENV
-        echo "export ANSIBLE_GIT_URL=$(echo ${ANSIBLE_GIT_URL:-https://github.com/james-crowley/on-demand-runners.git})" >> $BASH_ENV
-        echo "export ANSIBLE_GIT_BRANCH=$(echo ${ANSIBLE_GIT_BRANCH:-main})" >> $BASH_ENV
+        echo "export ANSIBLE_GIT_URL=$(echo ${<< parameters.ansible_git_url >>:-https://github.com/james-crowley/on-demand-runners.git})" >> $BASH_ENV
+        echo "export ANSIBLE_GIT_BRANCH=$(echo ${<< parameters.ansible_git_branch >>:-main})" >> $BASH_ENV
         source $BASH_ENV
 
   - run:
@@ -113,4 +113,4 @@ steps:
       name: Deprovision On Demand Runners
       working_directory: ~/project/on-demand-runners/auto-runner/
       command: |
-        ansible-playbook deprovision-on-demand-runners.yml -e "REGION=$AWS_DEFAULT_REGION SSH_KEY_NAME=$AWS_SSH_KEY NAMESPACE=$CIRCLECI_NAMESPACE RESOURCE_CLASS=$RESOURCE_CLASS CIRCLE_TOKEN=$CIRCLE_TOKEN NUMBER_OF_RUNNERS=$NUMBER_OF_RUNNERS UNTIL_RETRIES_RUNNERS=$NUMBER_OF_WAITS RESOURCE_CLASS_CREATION=true RUNNER_TOKEN_CREATION=true TEMPLATE_DYNAMIC_INVENTORY=true CLOUD_PROVIDER=aws"
+        ansible-playbook deprovision-on-demand-runners.yml -e "REGION=$AWS_DEFAULT_REGION SSH_KEY_NAME=$<< parameters.aws-ssh-key >> NAMESPACE=$<< parameters.circleci-namespace >> RESOURCE_CLASS=$RESOURCE_CLASS CIRCLE_TOKEN=$<< parameters.circle-token >> NUMBER_OF_RUNNERS=$NUMBER_OF_RUNNERS UNTIL_RETRIES_RUNNERS=$NUMBER_OF_WAITS RESOURCE_CLASS_CREATION=true RUNNER_TOKEN_CREATION=true TEMPLATE_DYNAMIC_INVENTORY=true CLOUD_PROVIDER=aws"
