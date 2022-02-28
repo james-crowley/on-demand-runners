@@ -117,39 +117,11 @@ parameters:
     type: string
 steps:
   - run:
-      name: Installing Ansible <<parameters.version>>
+      name: Installing Dependencies
       command: |
-        export PIP=$(which pip pip3 | head -1)
-        if [[ -n $PIP ]]; then
-          if command -v ansible &> /dev/null
-          then
-            echo "Ansible is already installed thus skipping install."
-          else
-            $PIP install 'ansible==<<parameters.version>>'
-          fi
-        else
-          echo "Unable to install Ansible! Please install Pip First."
-          exit 1
-        fi
-
-  - run:
-      name: Install boto3 & botocore
-      command: |
-        export PIP=$(which pip pip3 | head -1)
-        if [[ -n $PIP ]]; then
-            $PIP install boto3 botocore --upgrade
-        else
-          echo "Unable to install boto3 and botocore! Please install Pip First."
-          exit 1
-        fi
-
-  - run:
-      name: Install amazon.aws
-      command: ansible-galaxy collection install amazon.aws
-
-  - run:
-      name: Install community.general
-      command: ansible-galaxy collection install community.general
+        pip install 'ansible==<<parameters.version>>'
+        pip install boto3 botocore --upgrade
+        ansible-galaxy collection install amazon.aws community.general
 
   - run:
       name: Setting Defaults if Variables are not Set
