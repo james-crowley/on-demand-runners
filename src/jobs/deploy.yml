@@ -132,7 +132,7 @@ steps:
         echo "export RUNNER_TOKEN_CREATION=$(echo ${RUNNER_TOKEN_CREATION:-true})" >> $BASH_ENV
         echo "export TEMPLATE_DYNAMIC_INVENTORY=$(echo ${TEMPLATE_DYNAMIC_INVENTORY:-true})" >> $BASH_ENV
         echo "export CLOUD_PROVIDER=$(echo ${CLOUD_PROVIDER:-aws})" >> $BASH_ENV
-        echo "export CIRCLECI_USER=$(echo ${<< parameters.RUNNER_USER >>:-circleci})" >> $BASH_ENV
+        echo "export CIRCLECI_USER=$(echo ${<< parameters.runner_user >>:-circleci})" >> $BASH_ENV
         source $BASH_ENV
 
   - run:
