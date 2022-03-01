@@ -6,5 +6,5 @@ api:
 runner:
   name: {{ RUNNER_NICKNAME }}
   command_prefix: ["sudo", "-niHu", "{{ CIRCLECI_USER }}", "--"]
-  working_directory: {{ LAUNCH_AGENT_DIR }}/workdir/
+  working_directory: {{ LAUNCH_AGENT_DIR }}/workdir/%s
   cleanup_working_directory: {{ CLEANUP_WORKING_DIR }}
