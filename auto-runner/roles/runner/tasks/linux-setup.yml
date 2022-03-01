@@ -41,9 +41,6 @@
 - name: Create CircleCI User - {{ CIRCLECI_USER }}
   user:
     name: "{{ CIRCLECI_USER }}"
-    home: /opt/{{ CIRCLECI_USER }}/workdir
-    comment: "GECOS circleci"
-    uid: 1500
 
 - name: Create working directory
   file:

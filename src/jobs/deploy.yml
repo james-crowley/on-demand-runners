@@ -95,6 +95,11 @@ parameters:
       Number of on waits(10 seconds each) for the EC2 instance(s) to be provisioned before failure.
       If no number is provided 18 waits(3 minutes) will be selected.
     type: env_var_name
+  runner_user:
+    default: RUNNER_USER
+    description: |
+      The username the runner agent will utilize to run its service. If no username is given 'circleci' will be used.
+    type: env_var_name
   version:
     default: 2.9.*
     description: Ansible Version To Be Installed
@@ -127,6 +132,7 @@ steps:
         echo "export RUNNER_TOKEN_CREATION=$(echo ${RUNNER_TOKEN_CREATION:-true})" >> $BASH_ENV
         echo "export TEMPLATE_DYNAMIC_INVENTORY=$(echo ${TEMPLATE_DYNAMIC_INVENTORY:-true})" >> $BASH_ENV
         echo "export CLOUD_PROVIDER=$(echo ${CLOUD_PROVIDER:-aws})" >> $BASH_ENV
+        echo "export CIRCLECI_USER=$(echo ${<< parameters.RUNNER_USER >>:-circleci})" >> $BASH_ENV
         source $BASH_ENV
 
   - run:
@@ -144,4 +150,4 @@ steps:
       name: Configure On Demand Runners
       working_directory: ~/project/on-demand-runners/auto-runner/
       command: |
-        ansible-playbook -i aws_ec2.yml install-runner.yml -u ansible -e "NAMESPACE=$<< parameters.circleci-namespace >> RESOURCE_CLASS=$RESOURCE_CLASS CIRCLE_TOKEN=$<< parameters.circle-token >> RESOURCE_CLASS_CREATION=$RESOURCE_CLASS_CREATION RUNNER_TOKEN_CREATION=$RUNNER_TOKEN_CREATION target_hosts=all"
+        ansible-playbook -i aws_ec2.yml install-runner.yml -u ansible -e "NAMESPACE=$<< parameters.circleci-namespace >> RESOURCE_CLASS=$RESOURCE_CLASS CIRCLE_TOKEN=$<< parameters.circle-token >> RESOURCE_CLASS_CREATION=$RESOURCE_CLASS_CREATION RUNNER_TOKEN_CREATION=$RUNNER_TOKEN_CREATION target_hosts=all CIRCLECI_USER=$CIRCLECI_USER"
