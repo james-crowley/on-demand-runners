@@ -18,10 +18,12 @@ usage:
       jobs:
         - on-demand-runners/deploy:
             resource_class: << pipeline.id >>
+            context: aws-creds
         - run-test-on-runner:
             requires:
               - on-demand-runners/deploy
         - on-demand-runners/destroy:
             resource_class: << pipeline.id >>
+            context: aws-creds
             requires:
               - "run-test-on-runner"
